@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<title>src/Toy/A.hs</title>
+</head>
+<head>
+<link type='text/css' rel='stylesheet' href='liquid.css' />
+</head>
+
+<body>
+<hr>
+Put mouse over identifiers to see inferred types
+<pre><span class=hs-linenum> 1: </span><a class=annot href="#"><span class=annottext>{VV##821 : GHC.Types.Module | $k_##822}</span>
+</a><span class=hs-linenum> 2: </span><span class='hs-comment'>{- | This module defines assumptions and other Liquid refinements that we use to test if the lifted
+     spec retains such information.
+-}</span>
+<span class=hs-linenum> 5: </span>
+<span class=hs-linenum> 6: </span><span class='hs-keyword'>module</span> <span class='hs-conid'>Toy.A</span> <span class='hs-layout'>(</span> <span class='hs-varid'>notThree</span><span class='hs-layout'>,</span> <span class='hs-varid'>one</span><span class='hs-layout'>,</span> <span class='hs-varid'>two</span><span class='hs-layout'>,</span> <span class='hs-varid'>d1</span><span class='hs-layout'>,</span> <span class='hs-varid'>d2</span><span class='hs-layout'>,</span> <span class='hs-varid'>notEmpty</span><span class='hs-layout'>,</span> <span class='hs-varid'>myTest</span><span class='hs-layout'>,</span> <span class='hs-varid'>i2</span> <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<span class=hs-linenum> 7: </span>
+<span class=hs-linenum> 8: </span><span class='hs-comment'>-- | We define a simple type to be able to use it inside signatures and assumptions.</span>
+<span class=hs-linenum> 9: </span><span class='hs-keyword'>data</span> <span class='hs-conid'>D</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MkD1</span> <span class='hs-keyglyph'>|</span> <span class='hs-conid'>MkD2</span>
+<span class=hs-linenum>10: </span>
+<span class=hs-linenum>11: </span><span class='hs-comment'>-- | Here we define a simple function 'd1' and we refine its type to be 'MkD1'. This will translate</span>
+<span class=hs-linenum>12: </span><span class='hs-comment'>-- into LH with 'd1' ending up into the \"sigs\" of the final spec.</span>
+<span class=hs-linenum>13: </span>
+<span class=hs-linenum>14: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>d1</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyword'>{v:</span><span class='hs-conid'>D</span> <span class='hs-keyword'>| v = MkD1}</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>15: </span><span class='hs-definition'>d1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>D</span>
+<span class=hs-linenum>16: </span><a class=annot href="#"><span class=annottext>{v : Toy.A.D | v == Toy.A.MkD1}</span><span class='hs-definition'>d1</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MkD1</span>
+<span class=hs-linenum>17: </span>
+<span class=hs-linenum>18: </span><span class='hs-comment'>-- | Here we define a simple function 'd2' and we /assume/ its type to be 'MkD2'. This will translate</span>
+<span class=hs-linenum>19: </span><span class='hs-comment'>-- into LH with 'd2' ending up into the \"asmSigs\" of the final spec.</span>
+<span class=hs-linenum>20: </span>
+<span class=hs-linenum>21: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>assume</span> <span class='hs-varid'>d2</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyword'>{v:</span><span class='hs-conid'>D</span> <span class='hs-keyword'>| v = MkD2}</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>22: </span><span class='hs-definition'>d2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>D</span>
+<span class=hs-linenum>23: </span><a class=annot href="#"><span class=annottext>{v : Toy.A.D | v == Toy.A.MkD2}</span><span class='hs-definition'>d2</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MkD2</span>
+<span class=hs-linenum>24: </span>
+<span class=hs-linenum>25: </span><span class='hs-comment'>-- | This tests that LH can infer that this is a basic type 'int'. If this fails to check probably means</span>
+<span class=hs-linenum>26: </span><span class='hs-comment'>-- that either the assumption for 'I#' was not exported, which is:</span>
+<span class=hs-linenum>27: </span><span class='hs-comment'>--</span>
+<span class=hs-linenum>28: </span><span class='hs-comment'>-- assume GHC.Types.I# :: x:GHC.Prim.Int# -&gt; {v: GHC.Types.Int | v = (x :: int) }</span>
+<span class=hs-linenum>29: </span><span class='hs-comment'>--</span>
+<span class=hs-linenum>30: </span><span class='hs-comment'>--</span>
+<span class=hs-linenum>31: </span>
+<span class=hs-linenum>32: </span><span class='hs-comment'>--{-@ assume one :: {v: Int | v = 1 } @-}</span>
+<span class=hs-linenum>33: </span>
+<span class=hs-linenum>34: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>one</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyword'>{v:</span><span class='hs-conid'>Int</span> <span class='hs-keyword'>| v = 1 }</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>35: </span><span class='hs-definition'>one</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span>
+<span class=hs-linenum>36: </span><a class=annot href="#"><span class=annottext>{v : GHC.Types.Int | v == 1}</span><span class='hs-definition'>one</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-num'>1</span>
+<span class=hs-linenum>37: </span>
+<span class=hs-linenum>38: </span><span class='hs-definition'>foo</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span>
+<span class=hs-linenum>39: </span><a class=annot href="#"><span class=annottext>{VV##722 : GHC.Types.Int | $k_##723}</span><span class='hs-definition'>foo</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-num'>10</span>
+<span class=hs-linenum>40: </span>
+<span class=hs-linenum>41: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>assume</span> <span class='hs-varid'>notThree</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyword'>{v :</span> <span class='hs-conid'>Nat</span> <span class='hs-keyword'>| v != 3 }</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>42: </span><span class='hs-definition'>notThree</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span>
+<span class=hs-linenum>43: </span><a class=annot href="#"><span class=annottext>{VV##0 : GHC.Types.Int | VV##0 &gt;= 0
+                         &amp;&amp; VV##0 /= 3}</span><span class='hs-definition'>notThree</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-num'>4</span>
+<span class=hs-linenum>44: </span>
+<span class=hs-linenum>45: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>two</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Nat</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>46: </span><span class='hs-definition'>two</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span>
+<span class=hs-linenum>47: </span><a class=annot href="#"><span class=annottext>{VV##0 : GHC.Types.Int | VV##0 &gt;= 0}</span><span class='hs-definition'>two</span></a> <span class='hs-keyglyph'>=</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1370 : GHC.Types.Int | lq_tmp$x##1370 == 1
+                                  &amp;&amp; lq_tmp$x##1370 == Toy.A.one}</span><span class='hs-varid'>one</span></a> <span class='hs-varop'>+</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1371 : GHC.Types.Int | lq_tmp$x##1371 == 1
+                                  &amp;&amp; lq_tmp$x##1371 == Toy.A.one}</span><span class='hs-varid'>one</span></a>
+<span class=hs-linenum>48: </span>
+<span class=hs-linenum>49: </span><span class='hs-comment'>{- @ invariant {v:Nat | 0 &lt;= v } @-}</span>
+<span class=hs-linenum>50: </span>
+<span class=hs-linenum>51: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>measure</span> <span class='hs-varid'>notEmpty</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>52: </span><span class='hs-definition'>notEmpty</span>       <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Bool</span>
+<span class=hs-linenum>53: </span><a class=annot href="#"><span class=annottext>forall a .
+lq_tmp$x##741:[a] -&gt; {VV : GHC.Types.Bool | VV &lt;=&gt; Toy.A.notEmpty lq_tmp$x##741}</span><span class='hs-definition'>notEmpty</span></a> <span class='hs-conid'>[]</span>    <span class='hs-keyglyph'>=</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##766 : GHC.Types.Bool | not lq_tmp$x##766
+                                  &amp;&amp; lq_tmp$x##766 == GHC.Types.False}</span><span class='hs-conid'>False</span></a>
+<span class=hs-linenum>54: </span><span class='hs-definition'>notEmpty</span> <span class='hs-layout'>(</span><span class='hs-keyword'>_</span><span class='hs-conop'>:</span><span class='hs-keyword'>_</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##803 : GHC.Types.Bool | lq_tmp$x##803
+                                  &amp;&amp; lq_tmp$x##803 == GHC.Types.True}</span><span class='hs-conid'>True</span></a>
+<span class=hs-linenum>55: </span>
+<span class=hs-linenum>56: </span>
+<span class=hs-linenum>57: </span><span class='hs-keyword'>{-@</span>
+<span class=hs-linenum>58: </span><span class='hs-keyword'>data</span> <span class='hs-conid'>MyStruct</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MyStruct</span>
+<span class=hs-linenum>59: </span>    <span class='hs-layout'>{</span> <span class='hs-varid'>size</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Nat</span>
+<span class=hs-linenum>60: </span>    <span class='hs-layout'>}</span>
+<span class=hs-linenum>61: </span><span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>62: </span>
+<span class=hs-linenum>63: </span><span class='hs-keyword'>data</span> <span class='hs-conid'>MyStruct</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MyStruct</span>
+<span class=hs-linenum>64: </span>    <span class='hs-layout'>{</span> <span class='hs-varid'>size</span> <span class='hs-keyglyph'>::</span> <span class='hs-comment'>{-# UNPACK #-}</span> <span class='hs-varop'>!</span><span class='hs-conid'>Int</span>
+<span class=hs-linenum>65: </span>    <span class='hs-layout'>}</span> <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
+<span class=hs-linenum>66: </span>
+<span class=hs-linenum>67: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>i0</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Nat</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>68: </span><span class='hs-definition'>i0</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span>
+<span class=hs-linenum>69: </span><a class=annot href="#"><span class=annottext>{VV##0 : GHC.Types.Int | VV##0 &gt;= 0}</span><span class='hs-definition'>i0</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-num'>0</span>
+<span class=hs-linenum>70: </span>
+<span class=hs-linenum>71: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>i1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Nat</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>72: </span><span class='hs-definition'>i1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span>
+<span class=hs-linenum>73: </span><a class=annot href="#"><span class=annottext>{VV##0 : GHC.Types.Int | VV##0 &gt;= 0}</span><span class='hs-definition'>i1</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-num'>5</span>
+<span class=hs-linenum>74: </span>
+<span class=hs-linenum>75: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>i2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Nat</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>76: </span><span class='hs-definition'>i2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span>
+<span class=hs-linenum>77: </span><a class=annot href="#"><span class=annottext>{VV##0 : GHC.Types.Int | VV##0 &gt;= 0}</span><span class='hs-definition'>i2</span></a> <span class='hs-keyglyph'>=</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1225 : GHC.Types.Int | lq_tmp$x##1225 == lq_anf$##7205759403792807766##d3Gu}</span><span class='hs-num'>10</span></a> <span class='hs-varop'>+</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1245 : GHC.Types.Int | lq_tmp$x##1245 &gt;= 0
+                                  &amp;&amp; lq_tmp$x##1245 == Toy.A.i1}</span><span class='hs-varid'>i1</span></a>
+<span class=hs-linenum>78: </span>
+<span class=hs-linenum>79: </span><span class='hs-keyword'>{-@</span> <span class='hs-varid'>enlargeMyStruct</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>b</span><span class='hs-conop'>:</span><span class='hs-conid'>MyStruct</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>i</span><span class='hs-conop'>:</span><span class='hs-conid'>Nat</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>v</span><span class='hs-conop'>:</span><span class='hs-conid'>MyStruct</span> <span class='hs-keyword'>@-}</span>
+<span class=hs-linenum>80: </span><span class='hs-definition'>enlargeMyStruct</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>MyStruct</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Int</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MyStruct</span>
+<span class=hs-linenum>81: </span><a class=annot href="#"><span class=annottext>lq_tmp$x##1181:Toy.A.MyStruct -&gt; lq_tmp$x##1182:{VV##0 : GHC.Types.Int | VV##0 &gt;= 0} -&gt; Toy.A.MyStruct</span><span class='hs-definition'>enlargeMyStruct</span></a> <span class='hs-layout'>(</span><span class='hs-conid'>MyStruct</span> <span class='hs-varid'>old</span><span class='hs-layout'>)</span> <a class=annot href="#"><span class=annottext>{VV##0 : GHC.Types.Int | VV##0 &gt;= 0}</span><span class='hs-varid'>i</span></a> <span class='hs-keyglyph'>=</span> <a class=annot href="#"><span class=annottext>lq_tmp$x##1218:{lq_tmp$x##1215 : GHC.Types.Int | lq_tmp$x##1215 &gt;= 0} -&gt; {lq_tmp$x##1216 : Toy.A.MyStruct | Toy.A.size lq_tmp$x##1216 == lq_tmp$x##1218}</span><span class='hs-conid'>MyStruct</span></a> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1209 : GHC.Types.Int | lq_tmp$x##1209 == old##a3zO + i##a3zP}</span><span class='hs-layout'>(</span></a><a class=annot href="#"><span class=annottext>{lq_tmp$x##1212 : GHC.Types.Int | lq_tmp$x##1212 &gt;= 0
+                                  &amp;&amp; lq_tmp$x##1212 == old##a3zO}</span><span class='hs-varid'>old</span></a> <span class='hs-varop'>+</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1213 : GHC.Types.Int | lq_tmp$x##1213 &gt;= 0
+                                  &amp;&amp; lq_tmp$x##1213 == i##a3zP}</span><span class='hs-varid'>i</span></a><span class='hs-layout'>)</span>
+<span class=hs-linenum>82: </span>
+<span class=hs-linenum>83: </span><span class='hs-definition'>myTest</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
+<span class=hs-linenum>84: </span><a class=annot href="#"><span class=annottext>(GHC.Types.IO ())</span><span class='hs-definition'>myTest</span></a> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
+<span class=hs-linenum>85: </span>  <a class=annot href="#"><span class=annottext>(GHC.Types.IO ())</span><span class='hs-varid'>print</span></a> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1259 : GHC.Types.Int | lq_tmp$x##1259 &gt;= 0
+                                  &amp;&amp; lq_tmp$x##1259 == Toy.A.i2}</span><span class='hs-varid'>i2</span></a>
+<span class=hs-linenum>86: </span>  <a class=annot href="#"><span class=annottext>lq_tmp$x##1269:Toy.A.MyStruct -&gt; (GHC.Types.IO ())</span><span class='hs-varid'>print</span></a> <span class='hs-varop'>$</span> <a class=annot href="#"><span class=annottext>Toy.A.MyStruct</span><span class='hs-varid'>enlargeMyStruct</span></a> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1283 : Toy.A.MyStruct | Toy.A.size lq_tmp$x##1283 == lq_anf$##7205759403792807771##d3Gz}</span><span class='hs-layout'>(</span></a><span class='hs-conid'>MyStruct</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1277 : GHC.Types.Int | lq_tmp$x##1277 == lq_anf$##7205759403792807770##d3Gy}</span><span class='hs-num'>0</span></a><span class='hs-layout'>)</span> <a class=annot href="#"><span class=annottext>{lq_tmp$x##1296 : GHC.Types.Int | lq_tmp$x##1296 &gt;= 0
+                                  &amp;&amp; lq_tmp$x##1296 == Toy.A.i0}</span><span class='hs-varid'>i0</span></a>
+<span class=hs-linenum>87: </span>
+</pre>
+</body>
+</html>

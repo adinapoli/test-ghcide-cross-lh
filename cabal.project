@@ -1,0 +1,33 @@
+packages: .
+          -- ../liquidhaskell
+          -- ../liquidhaskell/liquid-fixpoint/
+          -- ../liquidhaskell/liquid-base
+          -- ../liquidhaskell/liquid-ghc-prim
+
+source-repository-package
+    type: git
+    location: https://github.com/ucsd-progsys/liquidhaskell
+    tag: 18ae52ece6ddc6ddb0365e80e5313f34788ccb1b
+
+source-repository-package
+    type: git
+    location: https://github.com/ucsd-progsys/liquidhaskell
+    subdir: liquid-ghc-prim
+    tag: 18ae52ece6ddc6ddb0365e80e5313f34788ccb1b
+
+source-repository-package
+    type: git
+    location: https://github.com/ucsd-progsys/liquidhaskell
+    subdir: liquid-base
+    tag: 18ae52ece6ddc6ddb0365e80e5313f34788ccb1b
+
+source-repository-package
+    type: git
+    location: https://github.com/ucsd-progsys/liquidhaskell
+    subdir: liquid-prelude
+    tag: 18ae52ece6ddc6ddb0365e80e5313f34788ccb1b
+
+source-repository-package
+    type: git
+    location: https://github.com/ucsd-progsys/liquid-fixpoint
+    tag: 0fdc383896f079c6837b03c3ab801a1853dd8f03

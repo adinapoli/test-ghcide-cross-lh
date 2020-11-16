@@ -1,0 +1,4 @@
+1:1-1:1::Toy.B.$trModule :: "GHC.Types.Module"
+9:1-9:3::Toy.B.i3 :: "{VV : GHC.Types.Int | VV >= 0}"
+9:6-9:8::Toy.A.i2 :: "{v : GHC.Types.Int | v >= 0\n                     && v == i2}"
+9:11-9:13::lq_anf$##7205759403792809669 :: "GHC.Types.Int"

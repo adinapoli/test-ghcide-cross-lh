@@ -1,0 +1,28 @@
+cabal-version: 1.12
+
+name:           toy-package-a
+version:        0.1.0.0
+description:    
+homepage:
+bug-reports:
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2019 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+
+library
+  exposed-modules:
+      Foo.Bar.Example
+      Toy.A
+      Toy.B
+      Evens
+  hs-source-dirs:
+      src
+  build-depends:
+        liquid-base
+      , liquidhaskell
+  default-language: Haskell2010
+  ghc-options: -O2 -Wall -fplugin=LiquidHaskell
+

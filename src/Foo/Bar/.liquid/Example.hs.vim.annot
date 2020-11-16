@@ -1,0 +1,8 @@
+1:1-1:1::Foo.Bar.Example.$trModule :: "GHC.Types.Module"
+8:1-8:9::Foo.Bar.Example.doubleIt :: "{VV : GHC.Types.Int | VV >= 0} -> {VV : GHC.Types.Int | VV >= 0}"
+8:10-8:11::x :: "{VV : GHC.Types.Int | VV >= 0}"
+8:14-8:15::x :: "{v : GHC.Types.Int | v >= 0\n                     && v == x}"
+8:18-8:19::lq_anf$##7205759403792806632 :: "GHC.Types.Int"
+12:1-12:6::Foo.Bar.Example.three :: "{VV : GHC.Types.Int | VV >= 0}"
+12:9-12:10::lq_anf$##7205759403792806628 :: "GHC.Types.Int"
+12:13-12:14::lq_anf$##7205759403792806630 :: "GHC.Types.Int"
